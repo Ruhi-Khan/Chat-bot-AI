@@ -1,1 +1,31 @@
+import openai
+import os
+
+# input your OpenAI API key from an environment variable
+openai.api_key = os.getenv("OPENAI_API_KEY")
+
+def ask_openai(question):
+    response = openai.Completion.create(
+        engine="text-davinci-003",
+        prompt=question,
+        max_tokens=150,
+        n=1,
+        stop=None,
+        temperature=0.7,
+    )
+    answer = response.choices[0].text.strip()
+    return answer
+
+def main():
+    print("Welcome to the AI Tutor! Type your questions below (type 'exit' to quit).")
+    while True:
+        question = input("You: ")
+        if question.lower() == 'exit':
+            print("Goodbye!")
+            break
+        answer = ask_openai(question)
+        print(f"AI Tutor: {answer}\n")
+
+if __name__ == "__main__":
+    main()
 
